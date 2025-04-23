@@ -60,3 +60,10 @@
   overflow: hidden; /* Ensure image doesn't overflow the card */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow effect */
 }
+.fixed-img {
+  height: 250px; 
+  object-fit: cover;
+}
+.custom-navbar {
+  min-height: 70px; 
+}

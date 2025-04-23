@@ -7,14 +7,18 @@
   <title>Siddhai Foods</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+
 </head>
 <body>
-<div class="container my-4">
+<div>
 
 <!-- ===========Top Products listing  start here ====================== -->
  <!-- code 001 -->
+ <?php include 'includes/navbar.php'; ?>
 <!-- Featured Products Section -->
-<h3 class="mb-3">Featured Products</h3>
+<div class="container">
+<h3 class="text-center mb-4">Featured Products</h3>
 <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
   <div class="carousel-inner">
     <?php
@@ -28,7 +32,7 @@
     ?>
           <div class="col-md-4">
             <div class="card mb-3 fadeIn">
-              <img src="assets/images/<?php echo $row['img_path']; ?>" class="card-img-top" alt="<?php echo $row['product_name']; ?>">
+            <img src="assets/images/<?php echo $row['img_path']; ?>" class="card-img-top fixed-img" alt="<?php echo $row['product_name']; ?>">
               <div class="card-body text-center">
                 <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
               </div>
@@ -128,7 +132,8 @@
   </nav>
 
 </div>
-
+<?php include 'includes/footer.php'; ?>
+      </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
