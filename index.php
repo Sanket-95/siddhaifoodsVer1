@@ -66,7 +66,7 @@
   <h2 class="text-center mb-4">Our Products</h2>
 
   <!-- Category Tabs -->
-  <ul class="nav nav-tabs mb-4" id="categoryTabs">
+  <!-- <ul class="nav nav-tabs mb-4" id="categoryTabs">
     <li class="nav-item">
       <a class="nav-link active" href="?category=all">All</a>
     </li>
@@ -78,7 +78,26 @@
                 </li>';
       }
     ?>
-  </ul>
+  </ul> -->
+  <ul class="nav nav-tabs mb-4" id="categoryTabs">
+  <?php
+    $activeCategory = isset($_GET['category']) ? $_GET['category'] : 'all';
+
+    // "All" tab
+    echo '<li class="nav-item">
+            <a class="nav-link ' . ($activeCategory == 'all' ? 'active' : '') . '" href="?category=all">All</a>
+          </li>';
+
+    // Dynamic category tabs
+    $cat_query = $conn->query("SELECT * FROM categories");
+    while ($cat = $cat_query->fetch_assoc()) {
+        echo '<li class="nav-item">
+                <a class="nav-link ' . ($activeCategory == $cat['id'] ? 'active' : '') . '" href="?category=' . $cat['id'] . '">' . $cat['name'] . '</a>
+              </li>';
+    }
+  ?>
+</ul>
+
 
   <!-- Product Grid -->
   <div class="row">

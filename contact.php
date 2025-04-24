@@ -99,15 +99,10 @@
     <!-- Factory Address and Send Message Section -->
     <div class="row">
       <!-- Factory Address Section -->
-      <div class="col-md-6 contact-info">
-        <h3>Factory Address</h3>
-        <p>1234 Factory Street, Industrial Zone, City, Country</p>
-        <p>Phone: +1 (123) 456-7890</p>
-        <p>Email: contact@factory.com</p>
-      </div>
+      
 
       <!-- Send Us a Message Section -->
-      <div class="col-md-6 contact-form">
+      <div class="col-md-12 contact-form">
         <h2>Send Us a Message</h2>
         <form action="send_message.php" method="POST">
           <div class="row">
@@ -161,14 +156,27 @@
         </form>
       </div>
     </div>
-
+    <div class="row mt-5">
+    <div class="col-md-6 contact-info d-flex justify-content-center">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d11605.887696136335!2d73.29423542426589!3d16.99252885520863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sSiddhai%20Foods%20Ratnagiri!5e1!3m2!1sen!2sin!4v1745492010605!5m2!1sen!2sin" width="500" height="400" style="border:1;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="col-md-6 contact-info">
+        <h3>Factory Address</h3>
+        <p>106 VIHAR VAIBHAV, Near Bandar Road, Tilak Aali Naka, Ratnagiri HO-415612 (Near Bandar Road)</p>
+        <p>Phone: +1 (123) 456-7890</p>
+        <p>Email: contact@factory.com</p>
+      </div>
+     
+    </div>
+    
+    
     <!-- Retail Address Section -->
-    <div class="contact-address">
+    <!-- <div class="contact-address">
       <h3>Retail Address</h3>
       <p>5678 Retail Road, Shopping Mall, City, Country</p>
       <p>Phone: +1 (987) 654-3210</p>
       <p>Email: retail@company.com</p>
-    </div>
+    </div> -->
 
   </div>
 
