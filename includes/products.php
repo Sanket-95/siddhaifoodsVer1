@@ -6,7 +6,7 @@ $cat_result = $conn->query($cat_sql);
 
 // Get selected category
 $selected_cat = isset($_GET['cat']) ? (int)$_GET['cat'] : 0;
-$limit = 20;
+$limit = 40;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
