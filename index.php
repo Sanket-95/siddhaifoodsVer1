@@ -26,7 +26,7 @@
 
 </head>
 <body>
-<div  style="background-color:rgb(246, 246, 246);">
+<div  style="background-color:rgb(246, 246, 246);"> 
 
 <!-- ===========Top Products listing  start here ====================== -->
  <!-- code 001 -->
@@ -49,7 +49,7 @@
     ?>
   </ul>
 </div>
-<!-- ========================= Category Tabs End ==============================-->
+<!-- ========================= Category Tabs Endd ==============================-->
 <!-- ==============   Advertisement Section - True Full Width, No Spacing ======-->
 <div class="w-100 m-0 p-0">
   <style>
