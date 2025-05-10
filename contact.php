@@ -103,7 +103,7 @@
 
       <!-- Send Us a Message Section -->
       <div class="col-md-12 contact-form">
-        <h2>Send Us a Message</h2>
+         <h2 class="mb-4 fw-semibold text-dark border-bottom pb-2">Send Us a Message</h2>
         <form action="send_message.php" method="POST">
           <div class="row">
             <!-- Name -->
@@ -161,12 +161,16 @@
     <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d11605.887696136335!2d73.29423542426589!3d16.99252885520863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sSiddhai%20Foods%20Ratnagiri!5e1!3m2!1sen!2sin!4v1745492010605!5m2!1sen!2sin" width="500" height="400" style="border:1;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
     <div class="col-md-6 contact-info">
-        <h3>Factory Address</h3>
-        <p>106 VIHAR VAIBHAV, Near Bandar Road, Tilak Aali Naka, Ratnagiri HO-415612 (Near Bandar Road)</p>
-        <p>Phone: +1 (123) 456-7890</p>
-        <p>Email: contact@factory.com</p>
-      </div>
-     
+        <h2 class="mb-4 fw-semibold text-dark border-bottom pb-2">Office</h2>
+        <p>Near J K File, MIDC Mirjole Ratnagiri-415639</p>
+        <p>Contact No - 9423094242, 9420594242, 9422003128</p>
+        <p>Time - 10 am To 6 pm (refer QR Code)</p>
+        <br><br>
+        <h2 class="mb-4 fw-semibold text-dark border-bottom pb-2">Factory Address</h2>
+        <p>At Pochari near Someshwar Temple Tal. Sangmeshwar Dist. Ratnagiri Pin -415621</p>
+        <p>Time - 9 am To 5.30pm</p>
+    </div>
+    
     </div>
     
     
@@ -179,6 +183,25 @@
     </div> -->
 
   </div>
+  <div class="container mb-3">
+      <h5>Why Customer Choose us</h5>
+      <hr class="mt-1 mb-4" style="height: 3px; background-color: rgb(81 85 88); opacity: 1;">
+      <p>Implementing food safety and quality assurance controls throughout all stages including the supply chain. 
+Maintaining very strict hygiene requirements to ensure that all products prepared for human consumption are wholesome.
+      </p>
+      <p>Requiring employees at all times to comply with all hygiene specific training, instructions, and directions. Maintaining very strict quality assurance standards that are essential to customer requirements.</p>
+    </div>
+
+    <div class="container mt-3">
+      <h5>Vision & Mission </h5>
+      <hr class="mt-1 mb-4" style="height: 3px; background-color: rgb(81 85 88); opacity: 1;">
+      <p><b>Vision : </b>
+	To create such an identity as an exporter of highest quality, nutritious healthy Konkani products. While providing rightful employment to one thousand rural women and youth as well as empowering self- help groups. 
+      </p>
+      <p><b>Mission :</b> Our Mission is to bring more flavours to your healthy life with taste Quality and nutritious value in just affordable price.
+Siddhai Foods means golden Confluence of quality taste health and fair price.
+</p>
+    </div>
 
   <!-- Footer -->
   <?php include 'includes/footer.php'; ?>

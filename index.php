@@ -9,7 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Banner sliding effect responsive  -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" defer></script>
 
@@ -98,15 +98,15 @@
 </style>
 </head>
 <body>
-<div  style="background-color:rgb(246, 246, 246);"> 
+<div  style="background-color:rgb(246, 246, 246);" > 
 
 <!-- ===========Top Products listing  start here ====================== -->
  <!-- code 001 -->
  <?php include 'includes/navbar.php'; ?>
 <!-- Featured Products Section -->
  <!-- ===================== Category Tabs ==============================-->
- <div class="w-100" style="overflow-x: auto;">
-  <ul class="nav nav-tabs d-flex flex-nowrap w-100" id="categoryTabs">
+ <div class="w-100 mb-3" style="overflow-x: auto;">
+  <ul class="nav nav-tabs d-flex flex-nowrap w-100 px-3 justify-content-center" id="categoryTabs">
     <li class="nav-item">
       <a class="nav-link <?= (!isset($_GET['category']) || $_GET['category'] === 'all') ? 'active' : '' ?>" href="?category=all">All</a>
     </li>
@@ -164,7 +164,7 @@
     $ad_result = $conn->query($ad_sql);
 
     if ($ad_result->num_rows > 0) {
-        echo '<div id="advertisementCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="7000" data-bs-wrap="true">';
+        echo '<div id="advertisementCarousel" class="carousel slide container mb-3" data-bs-ride="carousel" data-bs-interval="7000" data-bs-wrap="true">';
         echo '<div class="carousel-inner">';
 
         $ad_index = 0;
@@ -208,7 +208,7 @@
         if ($featured_result->num_rows > 0) {
       ?> 
 
-      <h3 class="text-center mb-4">Featured Products</h3>
+      <h3 class="text-center mb-4 fw-semibold text-dark border-bottom pb-2">Featured Products</h3>
       <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
         <div class="carousel-inner">
 
@@ -299,7 +299,7 @@
         while ($row = $product_res->fetch_assoc()) {
       ?>
     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-      <div class="card h-100" style="cursor:pointer;" onclick="window.location.href='productinfo.php?id=<?php echo $row['id']; ?>'">
+   <div class="card h-100" style="cursor:pointer;" onclick="window.location.href='productinfo.php?id=<?php echo $row['id']; ?>&catid=<?php echo $row['category_id']; ?>'">
         <img src="assets/images/<?php echo $row['image']; ?>" class="card-img-top" alt="<?php echo $row['name']; ?>">
         <div class="card-body">
           <h5 class="card-title"><?php echo $row['name']; ?></h5>
@@ -310,6 +310,10 @@
             <?php endif; ?>
           </p>
           <p class="card-text text-muted small"><?php echo $row['description']; ?></p>
+          <div class="mt-3 text-primary d-flex align-items-center gap-2">
+        <i class="bi bi-eye-fill"></i>
+        <span onclick="window.location.href='productinfo.php?id=<?php echo $row['id']; ?>&catid=<?php echo $row['category_id']; ?>'">View Product</span>
+      </div>
         </div>
       </div>
     </div>

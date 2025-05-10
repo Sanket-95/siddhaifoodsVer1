@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Shopping Cart</title>
+  <title>Siddhai Foods</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/style.css" rel="stylesheet">
-  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     .cart-item {
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -80,76 +80,60 @@
   <!-- Navigation bar -->
   <?php include 'includes/navbar.php'; ?>
 
-  <!-- Shopping Cart Container -->
   <div class="container my-5">
-    <h2 class="text-center mb-4">Shopping Cart</h2>
-
-    <!-- Cart Items -->
-    <div class="row">
-      <div class="col-12">
-        <!-- Item 1 -->
-        <div class="cart-item row align-items-center">
-          <div class="col-md-2">
-            <img src="assets/images/product1.jpg" alt="Product 1">
-          </div>
-          <div class="col-md-6 details">
-            <h5>Product 1 Title</h5>
-            <p>Price: $20.00</p>
-          </div>
-          <div class="col-md-2 quantity">
-            <input type="number" value="1" min="1" max="10" class="form-control">
-          </div>
-          <div class="col-md-2">
-            <span class="delete-btn">Delete</span>
-          </div>
+  <h2 class="text-center mb-4 fw-bold " style="letter-spacing: 1px;">
+  <i class="bi bi-cart-fill text-success me-2"></i> Shopping Cart
+</h2>
+  <div class="row">
+    <!-- Left: Cart Items -->
+    <div class="col-lg-8">
+      <!-- Repeat this block for each cart item -->
+      <div class="cart-item row align-items-center">
+        <div class="col-md-2">
+          <img src="assets/images/product1.jpg" alt="Product 1">
         </div>
-
-        <!-- Item 2 -->
-        <div class="cart-item row align-items-center">
-          <div class="col-md-2">
-            <img src="assets/images/product2.jpg" alt="Product 2">
-          </div>
-          <div class="col-md-6 details">
-            <h5>Product 2 Title</h5>
-            <p>Price: $15.00</p>
-          </div>
-          <div class="col-md-2 quantity">
-            <input type="number" value="1" min="1" max="10" class="form-control">
-          </div>
-          <div class="col-md-2">
-            <span class="delete-btn">Delete</span>
-          </div>
+        <div class="col-md-6 details">
+          <h5>Product 1 Title</h5>
+          <p>Price: $20.00</p>
         </div>
-
-        <!-- Item 3 -->
-        <div class="cart-item row align-items-center">
-          <div class="col-md-2">
-            <img src="assets/images/product3.jpg" alt="Product 3">
-          </div>
-          <div class="col-md-6 details">
-            <h5>Product 3 Title</h5>
-            <p>Price: $30.00</p>
-          </div>
-          <div class="col-md-2 quantity">
-            <input type="number" value="1" min="1" max="10" class="form-control">
-          </div>
-          <div class="col-md-2">
-            <span class="delete-btn">Delete</span>
-          </div>
+        <div class="col-md-2 quantity">
+          <input type="number" value="1" min="1" max="10" class="form-control">
+        </div>
+        <div class="col-md-2">
+          <span class="delete-btn">Delete</span>
         </div>
       </div>
+
+      <!-- Additional items here... -->
     </div>
 
-    <!-- Total Price Section -->
-    <div class="row">
-      <div class="col-12">
-        <div class="cart-total">
-          <p>Total Price: $65.00</p>
-        </div>
-        <button class="checkout-btn">Proceed to Checkout</button>
+    <!-- Right: Billing Summary -->
+    <div class="col-lg-4">
+      <div class="p-4 shadow-sm rounded bg-light">
+        <h4 class="mb-3">Bill Summary</h4>
+        <ul class="list-group list-group-flush mb-3">
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Subtotal</span>
+            <strong>$65.00</strong>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Shipping</span>
+            <strong>$5.00</strong>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Tax</span>
+            <strong>$3.00</strong>
+          </li>
+          <li class="list-group-item d-flex justify-content-between fw-bold">
+            <span>Total</span>
+            <strong>$73.00</strong>
+          </li>
+        </ul>
+        <button class="btn btn-success w-100 btn-lg">Proceed to Checkout</button>
       </div>
     </div>
   </div>
+</div>
 
   <!-- Footer -->
   <?php include 'includes/footer.php'; ?>
