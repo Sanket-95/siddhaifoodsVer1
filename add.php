@@ -49,7 +49,7 @@
   <?php include 'includes/navbar.php'; ?>
 
   <!-- Container for Admin Form -->
-  <div class="container my-5">
+  <div class="px-3 px-sm-4 px-md-5 my-5">
 
     <!-- Add Category Form Section -->
     <div class="row">

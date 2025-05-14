@@ -94,7 +94,7 @@
   <?php include 'includes/navbar.php'; ?>
 
   <!-- Contact Us Section -->
-  <div class="container contact-section">
+  <div class="px-3 px-sm-4 px-md-5 contact-section">
 
     <!-- Factory Address and Send Message Section -->
     <div class="row">
@@ -183,7 +183,7 @@
     </div> -->
 
   </div>
-  <div class="container mb-3">
+  <div class="px-3 px-sm-4 px-md-5 mb-3">
       <h5>Why Customer Choose us</h5>
       <hr class="mt-1 mb-4" style="height: 3px; background-color: rgb(81 85 88); opacity: 1;">
       <p>Implementing food safety and quality assurance controls throughout all stages including the supply chain. 
@@ -192,7 +192,7 @@ Maintaining very strict hygiene requirements to ensure that all products prepare
       <p>Requiring employees at all times to comply with all hygiene specific training, instructions, and directions. Maintaining very strict quality assurance standards that are essential to customer requirements.</p>
     </div>
 
-    <div class="container mt-3">
+    <div class="px-3 px-sm-4 px-md-5 mt-3">
       <h5>Vision & Mission </h5>
       <hr class="mt-1 mb-4" style="height: 3px; background-color: rgb(81 85 88); opacity: 1;">
       <p><b>Vision : </b>

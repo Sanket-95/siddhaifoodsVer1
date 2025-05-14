@@ -141,7 +141,7 @@
         aspect-ratio: auto;
       }
       .carousel-item img {
-        height: 400px; /* Increased height for desktop view */
+        height: 500px; /* Increased height for desktop view */
       }
     }
   </style>
@@ -164,7 +164,7 @@
     $ad_result = $conn->query($ad_sql);
 
     if ($ad_result->num_rows > 0) {
-        echo '<div id="advertisementCarousel" class="carousel slide container mb-3" data-bs-ride="carousel" data-bs-interval="7000" data-bs-wrap="true">';
+        echo '<div id="advertisementCarousel" class="carousel slide px-3 px-sm-4 px-md-5 mb-3" data-bs-ride="carousel" data-bs-interval="7000" data-bs-wrap="true">';
         echo '<div class="carousel-inner">';
 
         $ad_index = 0;
@@ -182,7 +182,7 @@
 </div>
 <!-- ==============   Advertisement Section - True Full Width, No Spacing End  ======-->
 
-<div class="container">
+<div class="px-3 px-sm-4 px-md-5">
   <!-- Top products add  -->
   <!-- <h3 class="text-center mb-4">Featured Products</h3> -->
   <!-- <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000"> -->

@@ -80,7 +80,7 @@
   <!-- Navigation bar -->
   <?php include 'includes/navbar.php'; ?>
 
-  <div class="container my-5">
+  <div class="px-3 px-sm-4 px-md-5 my-5">
   <h2 class="text-center mb-4 fw-bold " style="letter-spacing: 1px;">
   <i class="bi bi-cart-fill text-success me-2"></i> Shopping Cart
 </h2>

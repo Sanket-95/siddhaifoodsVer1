@@ -15,6 +15,78 @@ if (isset($_GET['id'])) {
   <title>Siddhai Foods</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+   <style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+  }
+
+  /* Navbar */
+  .navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  /* Category Tabs */
+  .nav-tabs .nav-link {
+    color: #555;
+    border: none;
+    border-radius: 20px;
+    margin-right: 8px;
+    transition: 0.3s;
+  }
+  .nav-tabs .nav-link.active {
+    background-color: #ff6b6b;
+    color: #fff;
+  }
+  .nav-tabs .nav-link:hover {
+    background-color: #f8d7da;
+    color: #000;
+  }
+
+  /* Carousel */
+  .carousel-inner img {
+    border-radius: 12px;
+  }
+
+  /* Product Cards */
+  .card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Increased shadow for more emphasis */
+} 
+  .card-img-top {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    height: 200px;
+    object-fit: cover;
+  }
+  .card-title {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .card-text {
+    font-size: 14px;
+  }
+
+  /* Pagination */
+  .pagination .page-link {
+    border-radius: 30px;
+    margin: 0 5px;
+    transition: 0.3s;
+  }
+  .pagination .page-link:hover {
+    background-color: #ff6b6b;
+    color: white;
+  }
+  .pagination .active .page-link {
+    background-color: #ff6b6b;
+    border-color: #ff6b6b;
+  }
+</style>
   <link href="assets/style.css" rel="stylesheet">
 </head>
 <body>
@@ -25,7 +97,7 @@ $product_query = $conn->query("SELECT * FROM products WHERE id = $product_id");
 $product = $product_query->fetch_assoc();
 ?>
 
-<div class="container my-5">
+<div class="px-3 px-sm-4 px-md-5 my-5">
   <div class="row shadow rounded overflow-hidden p-4 align-items-center" style="background-color: #fff;">
     
     <!-- Image Column (50%) -->
@@ -65,7 +137,7 @@ $product = $product_query->fetch_assoc();
   </div>
 </div>
 
-  <div class="container">
+  <div class="px-3 px-sm-4 px-md-5">
     <h5>Related Products</h5>
     <hr class="mt-1 mb-4" style="height: 3px; background-color: #000; opacity: 1;">
 

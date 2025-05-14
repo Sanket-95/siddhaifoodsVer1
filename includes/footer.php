@@ -1,6 +1,6 @@
 <!-- footer.php -->
 <footer class="bg-secondary text-white pt-4 pb-2 mt-5">
-  <div class="container text-center text-md-start">
+  <div class="px-3 px-sm-4 px-md-5 text-center text-md-start">
     <div class="row">
 
       <!-- Column 1: About -->
@@ -22,6 +22,7 @@
           <li><a href="index.php" class="text-white text-decoration-none">Home</a></li>
           <li><a href="contact.php" class="text-white text-decoration-none">Contact Us</a></li>
           <li><a href="addtocart.php" class="text-white text-decoration-none">Add to cart</a></li>
+          <li><a href="privacypolicy.php" class="text-white text-decoration-none">Privacy Policy</a></li>
         </ul>
       </div>
 
