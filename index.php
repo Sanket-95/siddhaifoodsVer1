@@ -63,6 +63,9 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     transition: transform 0.3s, box-shadow 0.3s;
   }
+  .card-body{
+    border-top:1px solid #F1EFEC;
+  }
   .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Increased shadow for more emphasis */
@@ -70,8 +73,8 @@
   .card-img-top {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
-    height: 200px;
-    object-fit: cover;
+    height: 300px;
+    object-fit: contain;
   }
   .card-title {
     font-weight: bold;
@@ -79,6 +82,7 @@
   }
   .card-text {
     font-size: 14px;
+    border-bottom:1px solid #F1EFEC;
   }
 
   /* Pagination */
@@ -122,15 +126,33 @@
   </ul>
 </div>
 <!-- ========================= Category Tabs Endd ==============================-->
-<!-- ==============   Advertisement Section - True Full Width, No Spacing ======-->
+<!-- ============== Advertisement Section - True Full Width, No Spacing ======-->
 <div class="w-100 m-0 p-0">
   <style>
-    /* Default: Mobile view */
     .carousel-item {
-      aspect-ratio: 16 / 6;
+      position: relative;
+      overflow: hidden;
+      /* aspect-ratio: 16 / 6;s */
     }
-    .carousel-item img {
-      object-fit: cover;
+
+    .carousel-item .blur-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      border-radius:8px;
+      background-position: center;
+      filter: blur(20px);
+      transform: scale(1.1); /* to avoid blur cut-off edges */
+      z-index: 1;
+    }
+
+    .carousel-item .main-img {
+      position: relative;
+      z-index: 2;
+      object-fit: contain;
       width: 100%;
       height: 100%;
     }
@@ -139,9 +161,10 @@
     @media (min-width: 768px) {
       .carousel-item {
         aspect-ratio: auto;
+        height: 500px;
       }
-      .carousel-item img {
-        height: 500px; /* Increased height for desktop view */
+      .carousel-item .main-img {
+        height: 100%;
       }
     }
   </style>
@@ -169,8 +192,10 @@
 
         $ad_index = 0;
         while ($ad = $ad_result->fetch_assoc()) {
-            echo '<div class="carousel-item '.($ad_index === 0 ? 'active' : '').'">';
-            echo '<img src="assets/images/'.$ad['image'].'" class="d-block w-100" alt="'.$ad['product_name'].'">';
+            $imagePath = 'assets/images/' . $ad['image'];
+            echo '<div class="carousel-item ' . ($ad_index === 0 ? 'active' : '') . '">';
+            echo '<div class="blur-bg" style="background-image: url(\'' . $imagePath . '\');"></div>';
+            echo '<img src="' . $imagePath . '" alt="' . htmlspecialchars($ad['product_name']) . '" class="main-img">';
             echo '</div>';
             $ad_index++;
         }
@@ -180,6 +205,7 @@
     }
   ?>
 </div>
+
 <!-- ==============   Advertisement Section - True Full Width, No Spacing End  ======-->
 
 <div class="px-3 px-sm-4 px-md-5">
@@ -232,7 +258,7 @@
                   if ($index < $total) {
                       $row = $items[$index];
                       echo '<div class="col-md-4 d-none d-md-block">'; // show only on md and above
-                      echo '<div class="card mb-3 fadeIn">';
+                      echo '<div class="card fadeIn">';
                       echo '<img src="assets/images/'.$row['image'].'" class="card-img-top fixed-img" alt="'.$row['product_name'].'">';
                       echo '<div class="card-body text-center"><h5 class="card-title">'.$row['product_name'].'</h5></div>';
                       echo '</div></div>';
@@ -303,13 +329,13 @@
         <img src="assets/images/<?php echo $row['image']; ?>" class="card-img-top" alt="<?php echo $row['name']; ?>">
         <div class="card-body">
           <h5 class="card-title"><?php echo $row['name']; ?></h5>
-          <p class="card-text">
+          <p class="card-text pb-3">
             ₹<?php echo $row['price']; ?> 
             <?php if ($row['mrp'] && $row['mrp'] > 0): ?>
               &nbsp; <small class="text-muted">MRP: <del>₹<?php echo $row['mrp']; ?></del></small>
             <?php endif; ?>
           </p>
-          <p class="card-text text-muted small"><?php echo $row['description']; ?></p>
+          <p class="card-text text-muted small pb-3"><?php echo $row['description']; ?></p>
           <div class="mt-3 text-primary d-flex align-items-center gap-2">
         <i class="bi bi-eye-fill"></i>
         <span onclick="window.location.href='productinfo.php?id=<?php echo $row['id']; ?>&catid=<?php echo $row['category_id']; ?>'">View Product</span>

@@ -72,8 +72,8 @@ $wa_url = "https://wa.me/$phone?text=$message";
     .card-img-top {
       border-top-left-radius: 12px;
       border-top-right-radius: 12px;
-      height: 200px;
-      object-fit: cover;
+      height: 300px;
+      object-fit: contain;
     }
 
     .card-title {
@@ -83,6 +83,7 @@ $wa_url = "https://wa.me/$phone?text=$message";
 
     .card-text {
       font-size: 14px;
+      border-bottom:1px solid #F1EFEC;
     }
 
     .pagination .page-link {
@@ -152,12 +153,15 @@ $wa_url = "https://wa.me/$phone?text=$message";
           <button class="btn btn-danger btn-lg">
             <i class="bi bi-cart me-2"></i> Add to Cart
           </button>
-          <div class="p-2 bg-primary text-white d-inline-block rounded text-center">
+          <div class="px-2 py-1 bg-primary text-white d-inline-block rounded text-center">
             <i class="bi bi-facebook fs-4"></i>
           </div>
           <a href="<?php echo $wa_url; ?>" target="_blank" class="text-decoration-none">
-          <div class="p-2 bg-success text-white d-inline-block rounded text-center ms-2">
+          <div class="px-2 py-1 bg-success text-white d-inline-block rounded text-center ms-2">
             <i class="bi bi-whatsapp fs-4"></i>
+          </div>
+          <div class="px-2 py-1 bg-danger text-white d-inline-block rounded text-center ms-2">
+            <i class="bi bi-youtube fs-4"></i>
           </div>
           </a>
         </div>
@@ -191,13 +195,13 @@ $wa_url = "https://wa.me/$phone?text=$message";
           <img src="assets/images/<?php echo $row['image']; ?>" class="card-img-top" alt="<?php echo $row['name']; ?>">
           <div class="card-body">
             <h5 class="card-title"><?php echo $row['name']; ?></h5>
-            <p class="card-text">
+            <p class="card-text pb-3">
               ₹<?php echo $row['price']; ?>
               <?php if ($row['mrp'] && $row['mrp'] > 0): ?>
                 &nbsp; <small class="text-muted">MRP: <del>₹<?php echo $row['mrp']; ?></del></small>
               <?php endif; ?>
             </p>
-            <p class="card-text text-muted small"><?php echo $row['description']; ?></p>
+            <p class="card-text text-muted small pb-3"><?php echo $row['description']; ?></p>
             <div class="mt-3 text-primary d-flex align-items-center gap-2">
               <i class="bi bi-eye-fill"></i>
               <span>View Product</span>

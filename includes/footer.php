@@ -1,4 +1,5 @@
 <!-- footer.php -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <footer class="bg-secondary text-white pt-4 pb-2 mt-5">
   <div class="px-3 px-sm-4 px-md-5 text-center text-md-start">
     <div class="row">
@@ -30,12 +31,22 @@
       <div class="col-md-4 mb-3">
         <h5>Contact Us</h5>
         <p>Phone: 9423094242, 9420594242, 9422003128</p>
+        <div class="px-2 py-1 bg-primary text-white d-inline-block rounded text-center">
+            <i class="bi bi-facebook fs-4"></i>
+          </div>
+          <a href="<?php echo $wa_url; ?>" target="_blank" class="text-decoration-none">
+          <div class="px-2 py-1 bg-success text-white d-inline-block rounded text-center ms-2">
+            <i class="bi bi-whatsapp fs-4"></i>
+          </div>
+          <div class="px-2 py-1 bg-danger text-white d-inline-block rounded text-center ms-2">
+            <i class="bi bi-youtube fs-4"></i>
+          </div>
       </div>
 
     </div>
-    <hr class="bg-light">
+    <hr class="bg-light text-white">
     <div class="text-center">
-      <p class="mb-0">&copy; <?php echo date("Y"); ?> Siddhai Foods. All rights reserved.</p>
+      <p class="mb-0 text-white">&copy; <?php echo date("Y"); ?> Siddhai Foods. All rights reserved.</p>
     </div>
   </div>
 </footer>
