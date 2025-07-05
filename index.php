@@ -326,7 +326,8 @@
       ?>
     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
    <div class="card h-100" style="cursor:pointer;" onclick="window.location.href='productinfo.php?id=<?php echo $row['id']; ?>&catid=<?php echo $row['category_id']; ?>'">
-        <img src="assets/images/<?php echo $row['image']; ?>" class="card-img-top" alt="<?php echo $row['name']; ?>">
+         <!-- If URL not matched use default img -->
+        <img src="<?php echo file_exists('assets/images/' . $row['image']) ? 'assets/images/' . $row['image'] : 'assets/images/default.jpg'; ?>" class="card-img-top" alt="<?php echo $row['name']; ?>">
         <div class="card-body">
           <h5 class="card-title"><?php echo $row['name']; ?></h5>
           <p class="card-text pb-3">

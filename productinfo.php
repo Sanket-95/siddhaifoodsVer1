@@ -101,7 +101,14 @@ $wa_url = "https://wa.me/$phone?text=$message";
       background-color: #ff6b6b;
       border-color: #ff6b6b;
     }
+    #mainProductImage {
+    transition: transform 0.3s ease; /* Smooth transition */
+    cursor: zoom-in; /* Optional: changes cursor on hover */
+    }
 
+  #mainProductImage:hover {
+    transform: scale(1.20); /* Zoom in */
+  }
     .catalog-thumb:hover {
       border: 2px solid #ff6b6b;
     }
@@ -121,12 +128,17 @@ $wa_url = "https://wa.me/$phone?text=$message";
 
       <!-- Image Column -->
       <div class="col-md-6 d-flex flex-column align-items-center" style="min-height: 300px;">
-        <img id="mainProductImage" src="assets/images/<?php echo $product['image']; ?>" class="img-fluid rounded" alt="<?php echo $product['name']; ?>" style="max-height: 300px;">
-
+        <!-- <img id="mainProductImage" src="assets/images/ php echo $product['image']; ?>" class="img-fluid rounded" alt="php echo $product['name']; ?>" style="max-height: 300px;"> -->
+        <img id="mainProductImage" src="assets/images/<?php echo $product['image']; ?>" 
+          class="img-fluid rounded" 
+          alt="<?php echo $product['name']; ?>" 
+          style="max-height: 300px;">
         <!-- 🔄 Catalog Image Section -->
         <?php
         // Fetch up to 5 other images from same category if available
-        $related_query = $conn->query("SELECT image FROM products WHERE id != $product_id " . ($category_id ? "AND category_id = $category_id " : "") . "LIMIT 10");
+        $related_query = $conn->query("SELECT image FROM products WHERE id = $product_id 
+                                      UNION 
+                                      SELECT img_url AS image FROM product_catalog WHERE product_id = $product_id");
         ?>
         <div class="mt-4 overflow-auto d-flex flex-nowrap w-100 justify-content-center" style="gap: 10px;">
           <?php while ($catalog = $related_query->fetch_assoc()): ?>
@@ -170,11 +182,15 @@ $wa_url = "https://wa.me/$phone?text=$message";
   </div>
 
   <div class="px-3 px-sm-4 px-md-5">
+    
     <h5>Related Products</h5>
+    <script>
+      // alert("Selected ID: <?php echo $category_id; ?>");
+    </script>
     <hr class="mt-1 mb-4" style="height: 3px; background-color: #000; opacity: 1;">
     <div class="row">
       <?php
-        $limit = 8;
+        $limit = 12;
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $start = ($page - 1) * $limit;
         $category_filter = '';
@@ -185,13 +201,16 @@ $wa_url = "https://wa.me/$phone?text=$message";
         $total = $count_res->fetch_assoc()['total'];
         $pages = ceil($total / $limit);
 
+        
+
         $product_res = $conn->query("SELECT * FROM products $category_filter LIMIT $start, $limit");
         if (!$product_res) echo "Error: " . $conn->error;
 
         while ($row = $product_res->fetch_assoc()) {
       ?>
       <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-        <div class="card h-100" style="cursor:pointer;" onclick="window.location.href='productinfo.php?id=<?php echo $row['id']; ?>'">
+        <div class="card h-100" style="cursor:pointer;" onclick="window.location.href='productinfo.php?id=<?php echo $row['id']; ?>&catid=<?php echo $row['category_id']; ?>'">
+
           <img src="assets/images/<?php echo $row['image']; ?>" class="card-img-top" alt="<?php echo $row['name']; ?>">
           <div class="card-body">
             <h5 class="card-title"><?php echo $row['name']; ?></h5>
