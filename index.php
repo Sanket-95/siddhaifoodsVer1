@@ -214,22 +214,26 @@
   <!-- <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000"> -->
   <!-- <div class="carousel-inner"> -->
       <?php
-        $featured_sql = "SELECT 
-                          fp.id, 
-                          fp.category_id, 
-                          fp.product_name, 
-                          p.image
-                        FROM 
-                          featured_products fp
-                        JOIN 
-                          products p 
-                        ON 
-                          fp.category_id = p.category_id 
-                          AND fp.product_name = p.name
-                        WHERE 
-                          fp.status = 1
-                        LIMIT 9
-                          ";
+       $featured_sql = "
+   SELECT 
+    fp.id, 
+    fp.category_id, 
+    fp.product_name, 
+    p.image,
+    c.name AS category_name
+FROM 
+    featured_products fp
+JOIN 
+    products p 
+    ON fp.category_id = p.category_id 
+    AND fp.product_name = p.name
+JOIN 
+    categories c 
+    ON fp.category_id = c.id
+WHERE 
+    fp.status = 1
+LIMIT 9
+";
         $featured_result = $conn->query($featured_sql);
         if ($featured_result->num_rows > 0) {
       ?> 
@@ -238,48 +242,47 @@
       <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
         <div class="carousel-inner">
 
-        <?php
-          
-          $items = [];
+      <?php
+$items = [];
 
-          // Fetch all data into an array
-          while ($row = $featured_result->fetch_assoc()) {
-              $items[] = $row;
-          }
+// Fetch all data into an array
+while ($row = $featured_result->fetch_assoc()) {
+    $items[] = $row;
+}
 
-          $total = count($items);
-          for ($i = 0; $i < $total; $i += 3) {
-              echo '<div class="carousel-item '.($i == 0 ? 'active' : '').'">';
-              echo '<div class="row justify-content-center">';
+$total = count($items);
+for ($i = 0; $i < $total; $i += 3) {
+    echo '<div class="carousel-item '.($i == 0 ? 'active' : '').'">';
+    echo '<div class="row justify-content-center">';
 
-              // Desktop view: 3 cards in one slide
-              for ($j = 0; $j < 3; $j++) {
-                  $index = $i + $j;
-                  if ($index < $total) {
-                      $row = $items[$index];
-                      echo '<div class="col-md-4 d-none d-md-block">'; // show only on md and above
-                      echo '<div class="card fadeIn">';
-                      echo '<img src="assets/images/'.$row['image'].'" class="card-img-top fixed-img" alt="'.$row['product_name'].'">';
-                      echo '<div class="card-body text-center"><h5 class="card-title">'.$row['product_name'].'</h5></div>';
-                      echo '</div></div>';
-                  }
-              }
+    // Desktop view: 3 cards in one slide
+    for ($j = 0; $j < 3; $j++) {
+        $index = $i + $j;
+        if ($index < $total) {
+            $row = $items[$index];
+            echo '<div class="col-md-4 d-none d-md-block">'; // show only on md and above
+            echo '<div class="card fadeIn">';
+            echo '<img src="assets/images/'.$row['category_name'].'/'.$row['image'].'" class="card-img-top fixed-img" alt="'.$row['product_name'].'">';
+            echo '<div class="card-body text-center"><h5 class="card-title">'.$row['product_name'].'</h5></div>';
+            echo '</div></div>';
+        }
+    }
 
-              echo '</div>';
+    echo '</div>';
 
-              // Mobile view: 1 card only per slide
-              if ($i < $total) {
-                  $row = $items[$i];
-                  echo '<div class="d-block d-md-none px-3">'; // show only on small screens
-                  echo '<div class="card mb-3 fadeIn">';
-                  echo '<img src="assets/images/'.$row['image'].'" class="card-img-top object-fit-cover w-100" style="height: 200px;" alt="'.$row['product_name'].'">';
-                  echo '<div class="card-body text-center"><h5 class="card-title">'.$row['product_name'].'</h5></div>';
-                  echo '</div></div>';
-              }
+    // Mobile view: 1 card only per slide
+    if ($i < $total) {
+        $row = $items[$i];
+        echo '<div class="d-block d-md-none px-3">'; // show only on small screens
+        echo '<div class="card mb-3 fadeIn">';
+        echo '<img src="assets/images/'.$row['category_name'].'/'.$row['image'].'" class="card-img-top object-fit-cover w-100" style="height: 200px;" alt="'.$row['product_name'].'">';
+        echo '<div class="card-body text-center"><h5 class="card-title">'.$row['product_name'].'</h5></div>';
+        echo '</div></div>';
+    }
 
-              echo '</div>'; // .carousel-item
-          }
-        ?>
+    echo '</div>'; // .carousel-item
+}
+?>
       </div>
 
     <!-- Manual Arrow Controls -->
@@ -300,65 +303,84 @@
 
     <!-- <h2 class="text-center mb-4">Our Products</h2> -->
     <!-- Product Grid -->
-    <div class="row">
-      <?php
-        // Pagination setup
-        $limit = 40;
-        $page = isset($_GET['page']) ? $_GET['page'] : 1;
-        $start = ($page - 1) * $limit;
+    <!-- Product Grid -->
+<div class="row">
+  <?php
+    // Pagination setup
+    $limit = 40;
+    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+    $start = ($page - 1) * $limit;
 
-        // Category filter
-        $category_filter = '';
-        if (isset($_GET['category']) && $_GET['category'] !== 'all') {
-            $category_id = intval($_GET['category']);
-            $category_filter = "WHERE category_id = $category_id";
-        }
+    // Category filter
+    $category_filter = '';
+    if (isset($_GET['category']) && $_GET['category'] !== 'all') {
+        $category_id = intval($_GET['category']);
+        $category_filter = "WHERE category_id = $category_id";
+    }
 
-        // Get total products for pagination
-        $count_res = $conn->query("SELECT COUNT(*) AS total FROM products $category_filter");
-        $total = $count_res->fetch_assoc()['total'];
-        $pages = ceil($total / $limit);
+    // Preload all category names
+    $category_names = [];
+    $cat_res = $conn->query("SELECT id, name FROM categories");
+    while ($cat = $cat_res->fetch_assoc()) {
+        $category_names[$cat['id']] = $cat['name'];
+    }
 
-        // Fetch products
-        $product_res = $conn->query("SELECT * FROM products $category_filter LIMIT $start, $limit");
+    // Get total products for pagination
+    $count_res = $conn->query("SELECT COUNT(*) AS total FROM products $category_filter");
+    $total = $count_res->fetch_assoc()['total'];
+    $pages = ceil($total / $limit);
 
-        while ($row = $product_res->fetch_assoc()) {
-      ?>
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-   <div class="card h-100" style="cursor:pointer;" onclick="window.location.href='productinfo.php?id=<?php echo $row['id']; ?>&catid=<?php echo $row['category_id']; ?>'">
-         <!-- If URL not matched use default img -->
-        <img src="<?php echo file_exists('assets/images/' . $row['image']) ? 'assets/images/' . $row['image'] : 'assets/images/default.jpg'; ?>" class="card-img-top" alt="<?php echo $row['name']; ?>">
-        <div class="card-body">
-          <h5 class="card-title"><?php echo $row['name']; ?></h5>
-          <p class="card-text pb-3">
-            ₹<?php echo $row['price']; ?> 
-            <?php if ($row['mrp'] && $row['mrp'] > 0): ?>
-              &nbsp; <small class="text-muted">MRP: <del>₹<?php echo $row['mrp']; ?></del></small>
-            <?php endif; ?>
-          </p>
-          <p class="card-text text-muted small pb-3"><?php echo $row['description']; ?></p>
-          <div class="mt-3 text-primary d-flex align-items-center gap-2">
-        <i class="bi bi-eye-fill"></i>
-        <span onclick="window.location.href='productinfo.php?id=<?php echo $row['id']; ?>&catid=<?php echo $row['category_id']; ?>'">View Product</span>
-      </div>
+    // Fetch products
+    $product_res = $conn->query("SELECT * FROM products $category_filter LIMIT $start, $limit");
+
+    while ($row = $product_res->fetch_assoc()) {
+        // Get category folder for this product
+        $product_folder = isset($category_names[$row['category_id']]) ? $category_names[$row['category_id']] : '';
+
+        // Build relative path (for browser)
+        $image_path = 'assets/images/' . ($product_folder ? $product_folder . '/' : '') . $row['image'];
+
+        // Build absolute server path (for PHP check)
+        $server_path = __DIR__ . '/' . $image_path;
+        // Check if file exists, else use default
+        $final_img = (file_exists($server_path) && !is_dir($server_path)) ? $image_path : 'assets/images/default.jpg';
+?>
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+    <div class="card h-100" style="cursor:pointer;" onclick="window.location.href='productinfo.php?id=<?php echo $row['id']; ?>&catid=<?php echo $row['category_id']; ?>'">
+      <img src="<?php echo $final_img; ?>" class="card-img-top" alt="<?php echo htmlspecialchars($row['name']); ?>">
+      <div class="card-body">
+        <h5 class="card-title"><?php echo htmlspecialchars($row['name']); ?></h5>
+        <p class="card-text pb-3">
+          ₹<?php echo $row['price']; ?>
+          <?php if ($row['mrp'] && $row['mrp'] > 0): ?>
+            &nbsp; <small class="text-muted">MRP: <del>₹<?php echo $row['mrp']; ?></del></small>
+          <?php endif; ?>
+        </p>
+        <p class="card-text text-muted small pb-3"><?php echo htmlspecialchars($row['description']); ?></p>
+        <div class="mt-3 text-primary d-flex align-items-center gap-2">
+          <i class="bi bi-eye-fill"></i>
+          <span onclick="window.location.href='productinfo.php?id=<?php echo $row['id']; ?>&catid=<?php echo $row['category_id']; ?>'">View Product</span>
         </div>
       </div>
     </div>
-      <?php } ?>
-    </div>
+  </div>
+  <?php } ?>
+</div>
 
-    <!-- Pagination -->
-    <nav>
-      <ul class="pagination justify-content-center">
-        <?php for ($i = 1; $i <= $pages; $i++): ?>
-          <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-            <a class="page-link" href="?page=<?= $i ?><?= isset($_GET['category']) ? '&category=' . $_GET['category'] : '' ?>">
-              <?= $i ?>
-            </a>
-          </li>
-        <?php endfor; ?>
-      </ul>
-    </nav>
+<!-- Pagination -->
+<nav>
+  <ul class="pagination justify-content-center">
+    <?php for ($i = 1; $i <= $pages; $i++): ?>
+      <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+        <a class="page-link" href="?page=<?= $i ?><?= isset($_GET['category']) ? '&category=' . $_GET['category'] : '' ?>">
+          <?= $i ?>
+        </a>
+      </li>
+    <?php endfor; ?>
+  </ul>
+</nav>
+
+
 </div>
 <?php include 'includes/footer.php'; ?>
       </div>

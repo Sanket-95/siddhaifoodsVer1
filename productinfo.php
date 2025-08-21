@@ -119,8 +119,13 @@ $wa_url = "https://wa.me/$phone?text=$message";
   <?php include 'includes/navbar.php'; ?>
 
   <?php
-    $product_query = $conn->query("SELECT * FROM products WHERE id = $product_id");
-    $product = $product_query->fetch_assoc();
+   $product_query = $conn->query("
+    SELECT p.*, c.name AS category_name
+    FROM products p
+    JOIN categories c ON p.category_id = c.id
+    WHERE p.id = $product_id
+");
+$product = $product_query->fetch_assoc();
   ?>
 
   <div class="px-3 px-sm-4 px-md-5 my-5">
@@ -129,24 +134,35 @@ $wa_url = "https://wa.me/$phone?text=$message";
       <!-- Image Column -->
       <div class="col-md-6 d-flex flex-column align-items-center" style="min-height: 300px;">
         <!-- <img id="mainProductImage" src="assets/images/ php echo $product['image']; ?>" class="img-fluid rounded" alt="php echo $product['name']; ?>" style="max-height: 300px;"> -->
-        <img id="mainProductImage" src="assets/images/<?php echo $product['image']; ?>" 
-          class="img-fluid rounded" 
-          alt="<?php echo $product['name']; ?>" 
-          style="max-height: 300px;">
+      <img id="mainProductImage" 
+     src="assets/images/<?php echo $product['category_name'] . '/' . $product['image']; ?>" 
+     class="img-fluid rounded" 
+     alt="<?php echo $product['name']; ?>" 
+     style="max-height: 300px;">
         <!-- 🔄 Catalog Image Section -->
         <?php
         // Fetch up to 5 other images from same category if available
-        $related_query = $conn->query("SELECT image FROM products WHERE id = $product_id 
-                                      UNION 
-                                      SELECT img_url AS image FROM product_catalog WHERE product_id = $product_id");
-        ?>
+       $related_query = $conn->query("
+    SELECT p.image, c.name AS category_name
+    FROM products p
+    JOIN categories c ON p.category_id = c.id
+    WHERE p.id = $product_id
+    
+    UNION
+    
+    SELECT pc.img_url AS image, c.name AS category_name
+    FROM product_catalog pc
+    JOIN products p ON pc.product_id = p.id
+    JOIN categories c ON p.category_id = c.id
+    WHERE pc.product_id = $product_id
+"); ?>
         <div class="mt-4 overflow-auto d-flex flex-nowrap w-100 justify-content-center" style="gap: 10px;">
           <?php while ($catalog = $related_query->fetch_assoc()): ?>
-            <img src="assets/images/<?php echo $catalog['image']; ?>" 
-                 class="img-thumbnail catalog-thumb"
-                 style="height: 70px; width: 70px; object-fit: cover; cursor: pointer;"
-                 onclick="document.getElementById('mainProductImage').src = this.src;">
-          <?php endwhile; ?>
+  <img src="assets/images/<?php echo $catalog['category_name'] . '/' . $catalog['image']; ?>" 
+       class="img-thumbnail catalog-thumb"
+       style="height: 70px; width: 70px; object-fit: cover; cursor: pointer;"
+       onclick="document.getElementById('mainProductImage').src = this.src;">
+<?php endwhile; ?>
         </div>
       </div>
 
@@ -189,6 +205,7 @@ $wa_url = "https://wa.me/$phone?text=$message";
     </script>
     <hr class="mt-1 mb-4" style="height: 3px; background-color: #000; opacity: 1;">
     <div class="row">
+      
       <?php
         $limit = 12;
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -203,15 +220,22 @@ $wa_url = "https://wa.me/$phone?text=$message";
 
         
 
-        $product_res = $conn->query("SELECT * FROM products $category_filter LIMIT $start, $limit");
+       $product_res = $conn->query("
+    SELECT p.*, c.name AS category_name
+    FROM products p
+    JOIN categories c ON p.category_id = c.id
+    $category_filter
+    LIMIT $start, $limit
+");
         if (!$product_res) echo "Error: " . $conn->error;
 
         while ($row = $product_res->fetch_assoc()) {
       ?>
       <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
         <div class="card h-100" style="cursor:pointer;" onclick="window.location.href='productinfo.php?id=<?php echo $row['id']; ?>&catid=<?php echo $row['category_id']; ?>'">
-
-          <img src="assets/images/<?php echo $row['image']; ?>" class="card-img-top" alt="<?php echo $row['name']; ?>">
+          <img src="assets/images/<?php echo $row['category_name'] . '/' . $row['image']; ?>" 
+     class="card-img-top" 
+     alt="<?php echo $row['name']; ?>">
           <div class="card-body">
             <h5 class="card-title"><?php echo $row['name']; ?></h5>
             <p class="card-text pb-3">
