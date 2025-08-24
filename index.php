@@ -170,20 +170,29 @@
   </style>
 
   <?php
+    // $ad_sql = "SELECT 
+    //             fp.id, 
+    //             fp.category_id, 
+    //             fp.product_name, 
+    //             p.image 
+    //           FROM 
+    //             featured_products fp
+    //           JOIN 
+    //             products p 
+    //           ON 
+    //             fp.category_id = p.category_id 
+    //             AND fp.product_name = p.name
+    //           WHERE 
+    //             fp.status = 2";
     $ad_sql = "SELECT 
-                fp.id, 
-                fp.category_id, 
-                fp.product_name, 
-                p.image 
+                id, 
+                category_id, 
+                product_name, 
+                img_path 
               FROM 
-                featured_products fp
-              JOIN 
-                products p 
-              ON 
-                fp.category_id = p.category_id 
-                AND fp.product_name = p.name
+                featured_products 
               WHERE 
-                fp.status = 2";
+                status = 2";
     $ad_result = $conn->query($ad_sql);
 
     if ($ad_result->num_rows > 0) {
@@ -192,7 +201,7 @@
 
         $ad_index = 0;
         while ($ad = $ad_result->fetch_assoc()) {
-            $imagePath = 'assets/images/' . $ad['image'];
+            $imagePath = 'assets/images/' . $ad['img_path'];
             echo '<div class="carousel-item ' . ($ad_index === 0 ? 'active' : '') . '">';
             echo '<div class="blur-bg" style="background-image: url(\'' . $imagePath . '\');"></div>';
             echo '<img src="' . $imagePath . '" alt="' . htmlspecialchars($ad['product_name']) . '" class="main-img">';
@@ -214,26 +223,43 @@
   <!-- <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000"> -->
   <!-- <div class="carousel-inner"> -->
       <?php
-       $featured_sql = "
-   SELECT 
-    fp.id, 
-    fp.category_id, 
-    fp.product_name, 
-    p.image,
-    c.name AS category_name
-FROM 
-    featured_products fp
-JOIN 
-    products p 
-    ON fp.category_id = p.category_id 
-    AND fp.product_name = p.name
-JOIN 
-    categories c 
-    ON fp.category_id = c.id
-WHERE 
-    fp.status = 1
-LIMIT 9
-";
+//        $featured_sql = "
+//    SELECT 
+//     fp.id, 
+//     fp.category_id, 
+//     fp.product_name, 
+//     p.image,
+//     c.name AS category_name
+// FROM 
+//     featured_products fp
+// JOIN 
+//     products p 
+//     ON fp.category_id = p.category_id 
+//     AND fp.product_name = p.name
+// JOIN 
+//     categories c 
+//     ON fp.category_id = c.id
+// WHERE 
+//     fp.status = 1
+// LIMIT 9
+// ";
+     $featured_sql = "
+          SELECT 
+            fp.id, 
+            fp.category_id, 
+            fp.product_name, 
+            fp.img_path,
+            c.name AS category_name
+        FROM 
+            featured_products fp
+        JOIN 
+            categories c 
+            ON fp.category_id = c.id
+        WHERE 
+            fp.status = 1
+        LIMIT 9
+        ";
+
         $featured_result = $conn->query($featured_sql);
         if ($featured_result->num_rows > 0) {
       ?> 
@@ -262,7 +288,8 @@ for ($i = 0; $i < $total; $i += 3) {
             $row = $items[$index];
             echo '<div class="col-md-4 d-none d-md-block">'; // show only on md and above
             echo '<div class="card fadeIn">';
-            echo '<img src="assets/images/'.$row['category_name'].'/'.$row['image'].'" class="card-img-top fixed-img" alt="'.$row['product_name'].'">';
+            // echo '<img src="assets/images/'.$row['category_name'].'/'.$row['img_path'].'" class="card-img-top fixed-img" alt="'.$row['product_name'].'">';
+            echo '<img src="assets/images/'.'/'.$row['img_path'].'" class="card-img-top fixed-img" alt="'.$row['product_name'].'">';
             echo '<div class="card-body text-center"><h5 class="card-title">'.$row['product_name'].'</h5></div>';
             echo '</div></div>';
         }
@@ -275,7 +302,8 @@ for ($i = 0; $i < $total; $i += 3) {
         $row = $items[$i];
         echo '<div class="d-block d-md-none px-3">'; // show only on small screens
         echo '<div class="card mb-3 fadeIn">';
-        echo '<img src="assets/images/'.$row['category_name'].'/'.$row['image'].'" class="card-img-top object-fit-cover w-100" style="height: 200px;" alt="'.$row['product_name'].'">';
+        // echo '<img src="assets/images/'.$row['category_name'].'/'.$row['img_path'].'" class="card-img-top object-fit-cover w-100" style="height: 200px;" alt="'.$row['product_name'].'">';
+        echo '<img src="assets/images/'.'/'.$row['img_path'].'" class="card-img-top object-fit-cover w-100" style="height: 200px;" alt="'.$row['product_name'].'">';
         echo '<div class="card-body text-center"><h5 class="card-title">'.$row['product_name'].'</h5></div>';
         echo '</div></div>';
     }
