@@ -254,16 +254,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- Catalog Form -->
   <div id="catalogForm" class="form-section">
     <h2 class="section-heading">Add Catalog</h2>
-    <form action="add_catalog.php" method="POST" enctype="multipart/form-data">
+    <form action="Backend/add_catalog.php" method="POST" enctype="multipart/form-data">
       <div class="row">
         <div class="col-md-4 mb-3">
-          <label for="catalogName" class="form-label">Catalog Name</label>
-          <input type="text" class="form-control" id="catalogName" name="catalog_name" required>
+          <label for="catalogCategory" class="form-label">Category</label>
+          <select class="form-select" id="catalogCategory" name="catalog_category_id" required>
+            <option value="">Select Category</option>
+            <?php
+              $cat_sql = "SELECT DISTINCT id, name FROM categories";
+              $cat_result = $conn->query($cat_sql);
+              while ($row = $cat_result->fetch_assoc()) {
+                echo "<option value='{$row['id']}'>{$row['name']}</option>";
+              }
+            ?>
+          </select>
         </div>
-
         <div class="col-md-4 mb-3">
-          <label for="catalogFile" class="form-label">Upload PDF</label>
-          <input type="file" class="form-control" id="catalogFile" name="catalog_file" accept="application/pdf" required>
+          <label for="catalogName" class="form-label">Catalog Name</label>
+          <select class="form-select" id="catalogName" name="catalog_id" required>
+            <option value="">Select Product</option>
+            <!-- Options will be loaded by JS -->
+          </select>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="catalogImages" class="form-label">Upload Images</label>
+          <input type="file" class="form-control" id="catalogImages" name="catalog_images[]" accept="image/*" multiple required>
         </div>
 
         <div class="col-md-12 text-center">
@@ -285,6 +300,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   window.onload = function () {
     showForm('categoryForm');
   };
+
+  document.getElementById('catalogCategory').addEventListener('change', function() {
+  var categoryId = this.value;
+  var catalogName = document.getElementById('catalogName');
+  catalogName.innerHTML = '<option value="">Loading...</option>';
+  if (categoryId) {
+    fetch('Backend/catalog_get_products.php?category_id=' + categoryId)
+      .then(response => response.json())
+      .then(data => {
+        let options = '<option value="">Select Product</option>';
+        data.forEach(function(product) {
+          options += `<option value="${product.id}">${product.name}</option>`;
+        });
+        catalogName.innerHTML = options;
+      });
+  } else {
+    catalogName.innerHTML = '<option value="">Select Product</option>';
+  }
+});
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
